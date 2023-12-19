@@ -44,15 +44,6 @@ export const Modulo2 = () => {
 export const Modulo3 = () => {
     return ( <>
     
-    <div className="flex flex-col items-center justify-center ms-10" id="izquiera">
-            <h1 className="font-russo text-6xl text-white drop-shadow-corta">
-                ¿CÓMO LO HAREMOS?
-                </h1>
-            <p className="font-Montserrat text-white text-justify px-28 mt-5 text-4xl drop-shadow-md">
-            Lograremos llegar a toda la comunidad a través 
-            de datos precisos y una experiencia de usuario eficaz y ergonómica.
-            </p>
-        </div>
-
+    
     </> );
 }

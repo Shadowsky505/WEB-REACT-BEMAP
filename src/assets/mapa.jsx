@@ -7,17 +7,31 @@ function initMap() {
     mapTypeId: "satellite",
   });
   heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(),
+    data: [],
     map: map,
   });
-}
-function getPoints() {
-  return [
-    new google.maps.LatLng(-16.392984, -71.532005),
-    new google.maps.LatLng(-16.392884, -71.532105),
-    new google.maps.LatLng(-16.392784, -71.532205),
 
-  ];
+  setInterval(obtenerDatosYActualizarHeatmap, 100);
 }
+
+const obtenerDatosYActualizarHeatmap = async () => {
+  try {
+    const response = await fetch('http://vpn.bemap.one/datos');
+    const data = await response.json();
+
+    const ultimosDatos = data.slice(-50);  
+
+    console.log('Datos obtenidos de la API:', ultimosDatos);
+
+    const puntos = ultimosDatos.map(dato => ({
+      location: new google.maps.LatLng(parseFloat(dato.latitud), parseFloat(dato.longitud)),
+      weight: parseFloat(dato.nivelContaminacion),
+    }));
+
+    heatmap.setData(puntos);
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+  }
+};
 
 window.initMap = initMap;
